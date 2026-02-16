@@ -56,6 +56,32 @@ const VideoResult: React.FC<VideoResultProps> = ({
 
     if (!video || !audio) return;
 
+    // Save to History on Success (once)
+    const saveToHistory = async () => {
+      if (!videoUrl || !config) return;
+      try {
+        await fetch('./api/history.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt: config.prompt,
+            video_url: videoUrl,
+            model: config.model,
+            resolution: config.resolution,
+            aspect_ratio: config.aspectRatio,
+            style: config.visualStyle
+          })
+        });
+        console.log('Video saved to history');
+      } catch (e) {
+        console.error('Failed to save history:', e);
+      }
+    };
+
+    if (videoUrl) {
+      saveToHistory();
+    }
+
     const syncPlay = () => {
         audio.play().catch(e => console.log("Audio play blocked/failed", e));
     };
