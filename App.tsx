@@ -12,6 +12,7 @@ import PromptForm from './components/PromptForm';
 import VideoResult from './components/VideoResult';
 import Navigation from './components/Navigation';
 import HomePage from './components/HomePage';
+import GalleryPage from './components/GalleryPage';
 import SettingsPage from './components/SettingsPage';
 import TutorialOverlay from './components/TutorialOverlay';
 import {generateVideo} from './services/geminiService';
@@ -24,7 +25,7 @@ import {
   VideoFile,
 } from './types';
 
-type ViewState = 'home' | 'studio' | 'settings';
+type ViewState = 'home' | 'studio' | 'gallery' | 'settings';
 
 const TUTORIAL_DISMISSED_KEY = 'veo_tutorial_dismissed';
 
@@ -288,6 +289,8 @@ const App: React.FC = () => {
           if (params) setInitialFormValues(params as GenerateVideoParams);
           setCurrentView('studio');
         }} />;
+      case 'gallery':
+        return <GalleryPage />;
       case 'settings':
         return <SettingsPage />;
       case 'studio':

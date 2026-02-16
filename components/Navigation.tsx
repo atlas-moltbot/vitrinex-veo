@@ -4,18 +4,19 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React from 'react';
-import { HomeIcon, LayoutGridIcon, SettingsIcon } from './icons';
+import { HomeIcon, LayoutGridIcon, SettingsIcon, FilmIcon } from './icons';
 import Tooltip from './Tooltip';
 
 interface NavigationProps {
-  currentView: 'home' | 'studio' | 'settings';
-  onNavigate: (view: 'home' | 'studio' | 'settings') => void;
+  currentView: 'home' | 'studio' | 'gallery' | 'settings';
+  onNavigate: (view: 'home' | 'studio' | 'gallery' | 'settings') => void;
 }
 
 const Navigation: React.FC<NavigationProps> = ({ currentView, onNavigate }) => {
   const navItems = [
     { id: 'home', label: 'Início', icon: HomeIcon, tooltip: 'Voltar para a tela inicial e galeria de templates.' },
     { id: 'studio', label: 'Estúdio', icon: LayoutGridIcon, tooltip: 'Área de criação e ferramentas de geração de vídeo.' },
+    { id: 'gallery', label: 'Galeria', icon: FilmIcon, tooltip: 'Veja seu histórico de vídeos gerados.' },
     { id: 'settings', label: 'Configurações', icon: SettingsIcon, tooltip: 'Gerenciar chaves de API e preferências do sistema.' },
   ] as const;
 
