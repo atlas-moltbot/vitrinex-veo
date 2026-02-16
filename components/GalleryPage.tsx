@@ -20,6 +20,7 @@ interface HistoryItem {
 
 const GalleryPage: React.FC = () => {
   const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [activeTab, setActiveTab] = useState<'videos' | 'images'>('videos');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -55,14 +56,34 @@ const GalleryPage: React.FC = () => {
 
   return (
     <div className="w-full max-w-7xl mx-auto px-6 py-12 animate-in fade-in duration-500">
-      <div className="flex items-center justify-between mb-12">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
         <div>
           <h2 className="text-4xl font-bold text-white">Minha Galeria</h2>
           <p className="text-gray-400 mt-2">Veja e baixe suas criações anteriores salvas no banco de dados.</p>
         </div>
+        
+        <div className="flex bg-[#27272a] rounded-xl p-1 border border-gray-700 shadow-lg">
+          <button 
+            onClick={() => setActiveTab('videos')}
+            className={`flex items-center gap-2 px-6 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+              activeTab === 'videos' ? 'bg-indigo-600 text-white shadow-md' : 'text-gray-400 hover:text-white'
+            }`}
+          >
+            Vídeos
+          </button>
+          <button 
+            onClick={() => setActiveTab('images')}
+            className={`flex items-center gap-2 px-6 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+              activeTab === 'images' ? 'bg-indigo-600 text-white shadow-md' : 'text-gray-400 hover:text-white'
+            }`}
+          >
+            Imagens
+          </button>
+        </div>
+
         <button 
           onClick={fetchHistory}
-          className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors text-gray-400 hover:text-white"
+          className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors text-gray-400 hover:text-white shrink-0"
         >
           <SparklesIcon className="w-5 h-5" />
         </button>
@@ -74,7 +95,13 @@ const GalleryPage: React.FC = () => {
         </div>
       )}
 
-      {history.length === 0 && !error ? (
+      {activeTab === 'images' ? (
+        <div className="text-center py-24 bg-gray-900/20 rounded-3xl border border-dashed border-gray-800">
+          <SparklesIcon className="w-12 h-12 text-gray-700 mx-auto mb-4" />
+          <p className="text-gray-500 text-lg">A galeria de imagens será integrada em breve.</p>
+          <p className="text-gray-600 text-sm mt-2">Estamos preparando o armazenamento para suas fotos e designs estáticos.</p>
+        </div>
+      ) : history.length === 0 && !error ? (
         <div className="text-center py-24 bg-gray-900/20 rounded-3xl border border-dashed border-gray-800">
           <FilmIcon className="w-12 h-12 text-gray-700 mx-auto mb-4" />
           <p className="text-gray-500 text-lg">Nenhum vídeo encontrado no histórico.</p>
